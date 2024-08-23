@@ -1,71 +1,70 @@
 (* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-HAKAN'S VERSION
+My VERSION
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
-//Log into Agility
+// Log into Agility
 DoubleClick "Chrome/GoogleChrome"
 Click {Image:"vawwinsidervagov", WaitFor:4}
-TypeText "https://www1.dfrhost.com/va-fsc-gov/Default.aspx?menu=RegressionTestPage",Return
+TypeText "https://www1.dfrhost.com/va-fsc-gov/Default.aspx?menu=RegressionTestPage", Return
 Click {Image:"PIVSignIn_002", WaitFor:20}
 Click {Image:"CertificateOKButton_002", WaitFor:10}
 WaitFor 10, "PINEntry_002"
 Click {Image:"PINEntry_002", WaitFor:4}
-TypeText "270607",Return
+TypeText "270607", Return
 
-//In Agility
+// In Agility
 WaitFor 10, "SearchIcon"
 Click Image:"SearchIcon"
-TypeText "S-124488",Return
+TypeText "S-124488", Return
 Click Image:"StorySearchResult"
+
 // Set imagefound location to status
 Set the assertionBehavior to "Warning"
 Assert that ImageFound(Image:"StatusAccepted", WaitFor: 10) or ImageFound(Image:"StatusDone", WaitFor: 10)
 
+// User Story Title Check
 DoubleClick Image:"UserStoryTitle"
 TypeText ControlKey, "a"
 TypeText ControlKey, "c"
-wait 2
+Wait 5 // Wait for the copy to complete
 put RemoteClipboard() into userStoryTitleText
 if userStoryTitleText is not empty then
-	log " userStoryTitleText: " & userStoryTitleText
+    log "User Story Title text: " & userStoryTitleText
 else
-	log "User Story Title text could not be retrieved."
+    log "User Story Title text could not be retrieved."
 end if
 
-
+// Definition of Done Check
 DoubleClick Image:"Definition_Done_003"
 TypeText ControlKey, "a"
 TypeText ControlKey, "c"
-wait 10
+Wait 5 // Wait for the copy to complete
 put RemoteClipboard() into def_done_text
 if def_done_text is not empty then
-	log"Definition of Done text: " & def_done_text
+    log "Definition of Done text: " & def_done_text
 else
-	log"Definition of Done text could not be retrieved."
+    log "Definition of Done text could not be retrieved."
 end if
 
-
+// Description Check
 DoubleClick Image:"Description_1"
 TypeText ControlKey, "a"
 TypeText ControlKey, "c"
-wait 10
-put RemoteClipboard(5) into DescriptionText
+Wait 5 // Wait for the copy to complete
+put RemoteClipboard() into DescriptionText
 if DescriptionText is not empty then
-	log " DescriptionText: " & DescriptionText
+    log "Description Text: " & DescriptionText
 else
-	log "DescriptionText could not be retrieved."
+    log "Description text could not be retrieved."
 end if
 
-
+// Acceptance Criteria Check
 DoubleClick Image:"AcceptanceCriteriaBacklog"
 TypeText ControlKey, "a"
 TypeText ControlKey, "c"
-wait 2
+Wait 5 // Wait for the copy to complete
 put RemoteClipboard() into AcceptanceCriteriaText
 if AcceptanceCriteriaText is not empty then
-	log "AcceptanceCriteriaText: " & AcceptanceCriteriaText
+    log "Acceptance Criteria Text: " & AcceptanceCriteriaText
 else
-	log "AcceptanceCriteriaText could not be received. "
+    log "Acceptance Criteria text could not be retrieved."
 end if
-
-
-
