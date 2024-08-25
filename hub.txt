@@ -1,115 +1,4 @@
 (* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-My VERSION
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
-
-// Step 1: Log into Agility
-DoubleClick "Chrome/GoogleChrome"
-Click {Image:"vawwinsidervagov", WaitFor:4}
-TypeText "https://www1.dfrhost.com/va-fsc-gov/Default.aspx?menu=RegressionTestPage", Return
-Click {Image:"PIVSignIn_002", WaitFor:20}
-Click {Image:"CertificateOKButton_002", WaitFor:10}
-
-// Handle different scenarios after attempting to log in with PIV card
-
-// Scenario 1: PIN entry is requested
-if ImageFound("PINEntry_002", WaitFor: 10) then
-    Click {Image:"PINEntry_002", WaitFor:4}
-    TypeText "270607", Return
-    log "PIN entry completed successfully."
-
-// Scenario 2: Directly authenticated without PIN prompt
-elseif ImageFound("AgilityHomePage", WaitFor: 10) then
-    log "Authenticated successfully without a PIN prompt."
-
-// Scenario 3: Long authentication wait with additional security prompts
-elseif ImageFound("Authenticating", WaitFor: 240) then // Wait up to 4 minutes
-    log "Authenticating... please wait."
-    if ImageFound("PIVPrompt", WaitFor: 10) then
-        Click "PIVPromptOKButton"
-        log "PIV prompt confirmed."
-        if ImageFound("AdditionalSecurityPrompt", WaitFor: 10) then
-            Click "AdditionalSecurityOKButton"
-            log "Additional security prompt confirmed."
-        else
-            log "No additional security prompt detected. Continuing..."
-        end if
-    else
-        log "No further prompts after authenticating. Proceeding..."
-    end if
-
-// Scenario 4: Authentication fails due to timeout
-elseif ImageFound("TimeoutError", WaitFor: 240) then
-    logError "Timeout occurred during authentication. Exiting script."
-    exit all
-
-// Unexpected scenario
-else
-    logError "Unexpected authentication behavior detected. Exiting script."
-    exit all
-end if
-
-// Step 2: Inside Agility - Perform actions after successful login
-WaitFor 10, "SearchIcon"
-Click Image:"SearchIcon"
-TypeText "S-124488", Return
-Click Image:"StorySearchResult"
-
-// Set imagefound location to status
-Set the assertionBehavior to "Warning"
-Assert that ImageFound(Image:"StatusAccepted", WaitFor: 10) or ImageFound(Image:"StatusDone", WaitFor: 10)
-
-// Step 3: User Story Title Verification
-DoubleClick Image:"UserStoryTitle"
-TypeText ControlKey, "a"
-TypeText ControlKey, "c"
-Wait 5 // Wait for clipboard to capture content
-put RemoteClipboard() into userStoryTitleText
-if userStoryTitleText is not empty then
-    log "User Story Title text: " & userStoryTitleText
-else
-    log "User Story Title text could not be retrieved."
-end if
-
-// Step 4: Definition of Done Verification
-DoubleClick Image:"Definition_Done_003"
-TypeText ControlKey, "a"
-TypeText ControlKey, "c"
-Wait 5 // Wait for clipboard to capture content
-put RemoteClipboard() into def_done_text
-if def_done_text is not empty then
-    log "Definition of Done text: " & def_done_text
-else
-    log "Definition of Done text could not be retrieved."
-end if
-
-// Step 5: Description Verification
-DoubleClick Image:"Description_1"
-TypeText ControlKey, "a"
-TypeText ControlKey, "c"
-Wait 5 // Wait for clipboard to capture content
-put RemoteClipboard() into DescriptionText
-if DescriptionText is not empty then
-    log "Description Text: " & DescriptionText
-else
-    log "Description text could not be retrieved."
-end if
-
-// Step 6: Acceptance Criteria Verification
-DoubleClick Image:"AcceptanceCriteriaBacklog"
-TypeText ControlKey, "a"
-TypeText ControlKey, "c"
-Wait 5 // Wait for clipboard to capture content
-put RemoteClipboard() into AcceptanceCriteriaText
-if AcceptanceCriteriaText is not empty then
-    log "Acceptance Criteria Text: " & AcceptanceCriteriaText
-else
-    log "Acceptance Criteria text could not be retrieved."
-end if
-
-
-OCR SOLUTION VERSION:
-
-(* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 My VERSION with OCR Implementation
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
 
@@ -129,11 +18,11 @@ if ImageFound("PINEntry_002", WaitFor: 10) then
     log "PIN entry completed successfully."
 
 // Scenario 2: Directly authenticated without PIN prompt
-elseif ImageFound("AgilityHomePage", WaitFor: 10) then
+else if ImageFound("AgilityHomePage", WaitFor: 10) then
     log "Authenticated successfully without a PIN prompt."
 
 // Scenario 3: Long authentication wait with additional security prompts
-elseif ImageFound("Authenticating", WaitFor: 240) then // Wait up to 4 minutes
+else if ImageFound("Authenticating", WaitFor: 240) then // Wait up to 4 minutes
     log "Authenticating... please wait."
     if ImageFound("PIVPrompt", WaitFor: 10) then
         Click "PIVPromptOKButton"
@@ -149,7 +38,7 @@ elseif ImageFound("Authenticating", WaitFor: 240) then // Wait up to 4 minutes
     end if
 
 // Scenario 4: Authentication fails due to timeout
-elseif ImageFound("TimeoutError", WaitFor: 240) then
+else if ImageFound("TimeoutError", WaitFor: 240) then
     logError "Timeout occurred during authentication. Exiting script."
     exit all
 
