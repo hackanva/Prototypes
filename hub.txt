@@ -59,7 +59,7 @@ Set the assertionBehavior to "Warning"
 Assert that ImageFound(Image:"StatusAccepted", WaitFor: 10) or ImageFound(Image:"StatusDone", WaitFor: 10)
 
 // Step 3: User Story Title Verification using OCR
-put ReadText(("UserStoryTitle"), Contrast: "High") into userStoryTitleText
+put ReadText((Rectangle: (100, 200, 300, 50)), Contrast: "High") into userStoryTitleText
 if userStoryTitleText is not empty then
     log "User Story Title text (OCR): " & userStoryTitleText
 else
@@ -67,7 +67,7 @@ else
 end if
 
 // Step 4: Definition of Done Verification using OCR
-put ReadText(("Definition_Done_003"), Contrast: "High") into def_done_text
+put ReadText((Rectangle: (100, 300, 300, 50)), Contrast: "High") into def_done_text
 if def_done_text is not empty then
     log "Definition of Done text (OCR): " & def_done_text
 else
@@ -75,7 +75,7 @@ else
 end if
 
 // Step 5: Description Verification using OCR
-put ReadText(("Description_1"), Contrast: "High") into DescriptionText
+put ReadText((Rectangle: (100, 400, 300, 50)), Contrast: "High") into DescriptionText
 if DescriptionText is not empty then
     log "Description Text (OCR): " & DescriptionText
 else
@@ -83,7 +83,7 @@ else
 end if
 
 // Step 6: Acceptance Criteria Verification using OCR
-put ReadText(("AcceptanceCriteriaBacklog"), Contrast: "High") into AcceptanceCriteriaText
+put ReadText((Rectangle: (100, 500, 300, 50)), Contrast: "High") into AcceptanceCriteriaText
 if AcceptanceCriteriaText is not empty then
     log "Acceptance Criteria Text (OCR): " & AcceptanceCriteriaText
 else
