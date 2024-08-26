@@ -37,10 +37,17 @@ else if ImageFound("Authenticating", WaitFor: 240) then // Wait up to 4 minutes
         log "No further prompts after authenticating. Proceeding..."
     end if
 
-// Scenario 4: Authentication fails due to timeout
-else if ImageFound("TimeoutError", WaitFor: 240) then
-    logError "Timeout occurred during authentication. Exiting script."
-    exit all
+// Step 4: Definition of Done Verification using JavaScript
+
+// JavaScript ile "Definition of Done" alanındaki değeri okuyun
+put remoteConnection's doJavaScript("return document.getElementById('definitionOfDone').value") into def_done_text
+
+// "Definition of Done" alanının boş olup olmadığını kontrol edin
+if def_done_text is not empty then
+    log "Definition of Done text is present: " & def_done_text
+else
+    log "Definition of Done text is missing or empty."
+end if
 
 // Unexpected scenario
 else
