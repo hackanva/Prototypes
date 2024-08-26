@@ -59,7 +59,9 @@ Set the assertionBehavior to "Warning"
 Assert that ImageFound(Image:"StatusAccepted", WaitFor: 10) or ImageFound(Image:"StatusDone", WaitFor: 10)
 
 // Step 3: User Story Title Verification using OCR
-put ReadText((Rectangle: (100, 200, 300, 50)), Contrast: "High") into userStoryTitleText
+// Correct usage with an image property or predefined area
+put (100, 200, 350, 250) into myRect // Define a rectangle area where the text is expected
+put ReadText(myRect, Contrast: "High") into userStoryTitleText
 if userStoryTitleText is not empty then
     log "User Story Title text (OCR): " & userStoryTitleText
 else
