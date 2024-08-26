@@ -75,12 +75,16 @@ else
     log "User Story Title text could not be retrieved using OCR."
 end if
 
-// Step 4: Definition of Done Verification using OCR
-put ReadText((Rectangle: (100, 300, 300, 50)), Contrast: "High") into def_done_text
+// Step 4: Definition of Done Verification using JavaScript
+
+// JavaScript ile "Definition of Done" alanındaki değeri okuyun
+put remoteConnection's doJavaScript("return document.getElementById('definitionOfDone').value") into def_done_text
+
+// "Definition of Done" alanının boş olup olmadığını kontrol edin
 if def_done_text is not empty then
-    log "Definition of Done text (OCR): " & def_done_text
+    log "Definition of Done text is present: " & def_done_text
 else
-    log "Definition of Done text could not be retrieved using OCR."
+    log "Definition of Done text is missing or empty."
 end if
 
 // Step 5: Description Verification using OCR
