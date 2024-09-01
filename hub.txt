@@ -121,3 +121,247 @@ if acceptanceCriteriaText is not empty then
 else
     log "Acceptance Criteria text is missing or empty."
 end if
+
+
+
+(*****NEW FUNCTIONS by Hakan Yorganci*****)
+(*****New Functions for TBA14*****)
+
+// Entering New Information for BMF Document Type (Created by Hakan on 08/27/24)
+to newinformation_bmf documentTypeBMF, securityorgBMF
+	Click "BMF_DocType"
+	TypeText documentTypeBMF
+	Click {Image:"BMF_SecOrg", WaitFor:10}
+	Click BMF_SecOrg
+	TypeText securityorgBMF
+	Click "BMF_GenerateDocNum"
+	
+	Click "BMF_Finish"
+end newinformation_bmf
+
+// Entering General Information on the Header Tab - BMF Document
+to generalinfo_header_bmf titleBMF, vendorBMF, textcodeBMF, disbursingOfficeBMF, locationCodeBMF, descriptionBMF, extDescriptionBMF
+	Click "BMF_General_Title"
+	TypeText titleBMF	
+	Click "BMF_Vendor_Code"
+	TypeText vendorBMF
+	repeat until ImageFound(ImageName: "BMF_TextCode") 
+		ScrollWheelDown 14.0
+	end repeat
+	Click "BMF_TextCode"
+	TypeText textcodeBMF
+	Click "BMF_DisbursingOffice"
+	TypeText disbursingOfficeBMF
+	repeat until ImageFound(ImageName: "BMF_IntTrans") 
+		ScrollWheelDown 4.0
+	end repeat
+	Click "BMF_BillType"
+	Click "BMF_BillTypeOpt"
+	Click "BMF_LocationCode"
+	TypeText locationCodeBMF
+	repeat until ImageFound(ImageName: "BMF_Description") 
+		ScrollWheelDown 12.0
+	end repeat
+	Click "BMF_Description"
+	TypeText descriptionBMF
+	Click "BMF_ExtDescription"
+	TypeText extDescriptionBMF
+end generalinfo_header_bmf
+
+
+// Opening & Adding Accounting Lines Tab (Accounting Lines Navigation)
+to navigating_al
+	Click "AccountingLines1"
+	Click "Add"
+end navigating_al
+
+
+// Entering Information on the Accounting Lines Tab - BMF Document
+
+// General Part
+to bmf_accounting_line_general  transactionBMF, recievableBMF, startDateBMF, endDateBMF
+	Click "CNL_AL_TransactionTyp"
+	TypeText transactionBMF
+	Click "BMF_RecievableType"
+	TypeText recievableBMF
+	Click "BMF_StartDate"
+	TypeText startDateBMF
+	Click "BMF_EndDate"
+	TypeText endDateBMF
+end bmf_accounting_line_general
+
+// Line Amounts Part
+to bmf_accounting_line_amounts initialAmountBMF
+	repeat until ImageFound(ImageName: "BMF_InitialAmount") 
+		ScrollWheelDown
+	end repeat
+	Click "BMF_InitialAmount"
+	TypeText ControlKey, "a"
+	TypeText initialAmountBMF
+end bmf_accounting_line_amounts
+
+// Additional Attributes Part
+to bmf_accounting_line_attributes shortKeyBMF
+	repeat until ImageFound(ImageName: "CNL_AdditionalAttribute_ShortKey") 
+		ScrollWheelDown
+	end repeat
+	Click "CNL_AdditionalAttribute_ShortKey"
+	TypeText shortKeyBMF
+end bmf_accounting_line_attributes 
+
+// Accounting Dimensions Part
+to bmf_accounting_line_dimensions templateBMF, bbfyBMF, fundBMF, revenueBMF, betcBMF
+	repeat until ImageFound(ImageName: "BMF_Template")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_Template"
+	TypeText templateBMF
+	repeat until ImageFound(ImageName: "CNL_BBFY")
+		ScrollWheelDown
+	end repeat
+	Click "CNL_BBFY"
+	TypeText bbfyBMF
+	Click "CNL_AL_Fund"
+	TypeText fundBMF
+	repeat until ImageFound(ImageName: "BMF_Revenue")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_Revenue"
+	TypeText revenueBMF
+	Click "BMF_BETC"
+	TypeText betcBMF	
+end bmf_accounting_line_dimensions
+
+// Printing Information Part
+to bmf_accounting_line_information textCodeBMF
+	repeat until ImageFound(ImageName: "BMF_TextCode")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_TextCode"
+	TypeText textCodeBMF
+end bmf_accounting_line_information
+
+// DMS Debt Information Part
+to bmf_accounting_line_dms trorBMF
+	repeat until ImageFound(ImageName: "BMF_TROR")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_TROR"
+	TypeText trorBMF
+end bmf_accounting_line_dms
+
+// Interagency Transfer Part
+to bmf_accounting_line_transfer shortKeyBMF, custBetcBMF, quantBMF, unitBMF, ginvBMF, custFundBMF, transContactBMF, phoneNoBMF, emailBMF, subCatBMF
+
+	// Section 1
+	repeat until ImageFound(ImageName: "BMF_ShortKeyTr")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_ShortKeyTr"
+	TypeText shortKeyBMF
+	
+	
+	repeat until ImageFound(ImageName: "BMF_CustomerBETC")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_CustomerBETC"
+	TypeText custBetcBMF
+	ScrollWheelDown 3
+	
+	repeat until ImageFound(ImageName: "BMF_Quantity")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_Quantity"
+	TypeText ControlKey, "a"
+	TypeText quantBMF
+	Click "BMF_UnitPrice"
+	TypeText ControlKey, "a"
+	TypeText unitBMF
+	
+	
+	// Section 2
+	Click "BMF_GlnvIPAC"
+	TypeText ginvBMF
+	repeat until ImageFound(ImageName: "BMF_CustFundSource")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_CustFundSource"
+	TypeText custFundBMF
+	Click "BMF_FundingAuthSource"
+	Click "BMF_FundAuthNone"
+	repeat until ImageFound(ImageName: "BMF_TransactionContact")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_TransactionContact"
+	TypeText transContactBMF
+	Click "BMF_ContactPhoneNumber"
+	TypeText phoneNoBMF
+	Click "BMF_ContactEmail"
+	TypeText emailBMF
+	Click "BMF_SubCategory"
+	TypeText subCatBMF
+	TypeText returnKey
+	
+end bmf_accounting_line_transfer
+
+// User Defined Fields Part
+to bmf_accounting_line_user costBMF
+	repeat until ImageFound(ImageName: "BMF_FMSCostCenter")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_FMSCostCenter"
+	TypeText costBMF
+end bmf_accounting_line_user
+
+// Description Part
+to bmf_accounting_line_description descBMF, extDescBMF
+	repeat until ImageFound(ImageName: "BMF_AL_Description")
+		ScrollWheelDown
+	end repeat
+	Click "BMF_AL_Description"
+	TypeText descBMF
+	Click "BMF_ExtDescription"
+	TypeText extDescBMF
+end bmf_accounting_line_description
+
+// Save & Verify Form
+to bmf_save_verify
+	Click "Save"
+	Click "VerifyForm"
+	wait 5
+end bmf_save_verify
+
+// Overriding the Errors & Submitting
+to bmf_clear_errors_submitting
+	Click "BMF_ErrorWarning"
+	Click "BMF_OverrideWarnings"
+	Click {Image:"BudgetSetup_SubmitButton", WaitFor:5}
+end bmf_clear_errors_submitting
+
+
+
+// Verfying the Document Status
+to form_doc_bmf docTypeBMF, docStatus
+	Click {Image:"Transactions1", WaitFor:10}
+	Click {Image:"FormDocumentSelection", WaitFor:10}
+	Click "CNL_DocType"
+	TypeText docTypeBMF
+	Click "Search_DocNum"
+	TypeText ControlKey & "v" // Pasting the previously copied Doc Number in step 7!
+	Click "Search"
+	// I want to go down the top bottom of the page until I see Document status column to verify the status
+	repeat
+		ScrollWheelDown 
+		Wait 0.5 //Waiting for page to load
+		if ImageFound("BMF_DocumentStatus") then
+			DoubleClick "BMF_DocumentStatus"
+			Click "BMF_DocumentStatus"
+			TypeText ControlKey, "c"
+			put RemoteClipboard() into docStatus
+			log docStatus
+			return docStatus
+		end if
+	end repeat
+end form_doc_bmf
+
+(***** END of Hakan's Functions *****)
