@@ -365,3 +365,14 @@ to form_doc_bmf docTypeBMF, docStatus
 end form_doc_bmf
 
 (***** END of Hakan's Functions *****)
+
+
+Now, I’m going to update you on the latest events. I have completely finished TBA 14. For the new functions, I tried to reuse as much as possible. If I ended up developing the same function again for the same purpose, I apologize. You will see it in the Common Functionalities section; I have only commented out the new functions I added, meaning I placed them between comments. If in the future we decide that these haven’t been reused and we need to optimize them, we can easily remove the redundant methods I’ve used by mistake.
+
+Additionally, Test Case 14 can run smoothly from start to finish without any issues. However, for TBA 15, or TBA 15T, when we search for the document number that has the “pending approval” status we created in TBA 14, we can’t see it. This is happening on the Inbox and Links page. The reason we can’t see it, Jacob mentioned in today’s meeting, is possibly due to an authorization process or another correction that needs to be made in Agility. After this meeting, Karan discussed this issue with Scott, and Scott will ensure that we receive the correct data information that we put in the sheet. Most likely, we will have to correct TBA 14 again with the new data. Because the template number we entered according to the Test Case in TBA 14 is wrong. Jacob informed us of this. If the correct template number is entered in TBA 14, then the issues in TBA 15 and 16 will resolve themselves.
+
+As of today, I have pushed the scripts with the incorrectly entered template to my local branch. You can check the latest version from here on GitHub. Additionally, in the 15th test step, TBA 14 and my first and last names will be written in the title section. I have automated up to this point because after clicking search, due to the issue I mentioned, we are encountering a “no results” outcome. Therefore, unfortunately, 15 and 16 cannot be automated at the moment.
+
+Other than that, please let me know in detail tomorrow how I can assist you with TBA 10. Which test case would you like me to start with? Let’s discuss that. Or, if there’s another test case outside of TBA 10 that you want me to automate, I am here to help you with that. Thank you very much.
+
+
